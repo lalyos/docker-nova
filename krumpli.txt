@@ -94,6 +94,43 @@ create table ...
 alias vip="docker exec -it db psql -U postgres postgres -c 'SELECT * from vip'"
 ```
 
+kill all containers, but still
+```
+docker run -d --rm  \
+  --name db \
+  -e POSTGRES_PASSWORD=s3cr3t \
+  -v vipdb:/var/lib/postgresql/data \
+  postgres:17
+```
+
+## postgress from scratch
+
+steel from here: https://github.com/lalyos/docker-nova/blob/master/sql/init.sql
+
+```
+docker run -d --rm  \
+  --name db \
+  -e POSTGRES_PASSWORD=s3cr3t \
+  -v $PWD/sql:/docker-entrypoint-initdb.d \
+  -v vipdb:/var/lib/postgresql/data \
+  postgres:17
+```
+
+## Vip project (db + frontend)
+
+
+```
+docker build \
+  -t vip \
+  --file Dockerfile.vip  \
+  https://github.com/lalyos/docker-nova.git
+
+docker run -d \
+  --name vip \
+  -p 80 \
+  vip
+
+```
 ## Troubleshoot
 
 If you local image doesn't work, you can build directly from a git repo:
