@@ -8,7 +8,7 @@ cat > /var/www/html/index.html <<EOF
 </head>
 <h1>${TITLE:-RTFM}</h1>
 <body bgcolor="${COLOR:-red}">
-    for real !
+    ${BODY:-Please use the BODY/COLOR/TITLE environment variables.}
 </body>
 </html>
 EOF
