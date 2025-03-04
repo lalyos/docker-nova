@@ -7,4 +7,7 @@ RUN apt-get install -y \
   nginx
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
+ENV TITLE=Welcome
+ENV BODY="Please use BODY/COLOR/TITLE env vars"
+ENV COLOR=gray
 CMD ["/start.sh"]
