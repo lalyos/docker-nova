@@ -17,6 +17,10 @@ services:
     init: true
     ports:
     - 80
+  adminer:
+    image: adminer
+    ports:
+      - 8080
 
 volumes:
   vipdb:
