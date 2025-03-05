@@ -7,13 +7,24 @@ services:
     volumes:
     - vipdb:/var/lib/postgresql/data
     - ./sql:/docker-entrypoint-initdb.d
-  
-  vip:
+
+  web:
+    image: nginx:1.27-alpine
+    ports:
+      - 80
+    volumes:
+      - www:/usr/share/nginx/html
+
+  generator:
     build:
-      # context: .
-      dockerfile: Dockerfile.vip
-      context: https://github.com/lalyos/docker-nova.git
-    image: vip
+      dockerfile_inline: |
+        FROM postgres:17
+        COPY start-generator.sh /start.sh
+        RUN chmod +x /start.sh
+        CMD ["/start.sh"]
+    image: generator
+    volumes:
+      - www:/www
     init: true
     ports:
     - 80
@@ -24,3 +35,4 @@ services:
 
 volumes:
   vipdb:
+  www:
