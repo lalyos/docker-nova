@@ -1,3 +1,4 @@
+name: dev
 services:
   db:
     image: postgres:17
@@ -9,9 +10,11 @@ services:
   
   vip:
     build:
-      context: .
+      # context: .
       dockerfile: Dockerfile.vip
+      context: https://github.com/lalyos/docker-nova.git
     image: vip
+    init: true
     ports:
     - 80
 
