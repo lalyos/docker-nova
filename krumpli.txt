@@ -108,7 +108,7 @@ docker run -d --rm  \
 steel from here: https://github.com/lalyos/docker-nova/blob/master/sql/init.sql
 
 ```
-docker run -d --rm  \
+docker run -d  \
   --name db \
   -e POSTGRES_PASSWORD=s3cr3t \
   -v $PWD/sql:/docker-entrypoint-initdb.d \
@@ -131,6 +131,49 @@ docker run -d \
   vip
 
 ```
+
+
+# Networks
+
+## Links
+
+an `/etc/hosts` entry will pount to the actual IP of the container `db`.
+```
+docker run -d \
+  --name vip \
+  --link db:db \
+  -p 80 \
+  vip
+```
+
+## Custom Networks
+
+```
+docker network create blue
+
+docker run -d  \
+  --name db \
+  --net blue \
+  -e POSTGRES_PASSWORD=s3cr3t \
+  -v $PWD/sql:/docker-entrypoint-initdb.d \
+  -v vipdb:/var/lib/postgresql/data \
+  postgres:17
+
+docker run -d \
+  --name vip \
+  --net blue \
+  -p 80 \
+  vip
+```
+
+
+
+
+
+
+
+
+
 ## Troubleshoot
 
 If you local image doesn't work, you can build directly from a git repo:
