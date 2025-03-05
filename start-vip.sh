@@ -4,7 +4,7 @@
 
 
 list=$(PGPASSWORD=s3cr3t \
-psql -h 172.17.0.2 \
+psql -h ${DB_HOST:-db} \
   -U postgres  \
   postgres \
   -c 'select * from vip;'
