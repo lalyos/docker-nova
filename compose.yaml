@@ -1,0 +1,19 @@
+services:
+  db:
+    image: postgres:17
+    environment:
+    - POSTGRES_PASSWORD=s3cr3t
+    volumes:
+    - vipdb:/var/lib/postgresql/data
+    - ./sql:/docker-entrypoint-initdb.d
+  
+  vip:
+    build:
+      context: .
+      dockerfile: Dockerfile.vip
+    image: vip
+    ports:
+    - 80
+
+volumes:
+  vipdb:
