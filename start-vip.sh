@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-
+sleep ${SLEEP:-5}
 
 list=$(PGPASSWORD=s3cr3t \
 psql -h ${DB_HOST:-db} \
