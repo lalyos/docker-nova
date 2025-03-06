@@ -17,8 +17,8 @@ cat > ${WWW_DIR:-/www}/index.html <<EOF
     <meta charset="UTF-8">
     <title>Document</title>
 </head>
-<h1>VIP db</h1>
-<body bgcolor="yellow">
+<h1>VIP db [${ENV:-dev}]</h1>
+<body bgcolor="${COLOR:-gray}">
 <pre>
 ${list}
 </pre>
