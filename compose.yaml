@@ -49,6 +49,7 @@ services:
     volumes:
       - www:/www
     init: true
+    stop_grace_period: "0"
     ports:
     - 80
   adminer:
