@@ -1,22 +1,5 @@
 name: ${ENV:-dev}
 services:
-  traefik:
-    image: traefik:1.7-alpine
-    container_name: traefik
-    restart: always
-    command:
-      - --retry
-      - --rest
-      - --docker.domain=lvh.me
-      - --docker.network=default
-      - --api.dashboard
-    labels:
-      - "traefik.frontend.rule=Host:traefik.lvh.me"
-      - "traefik.port=8080"
-    ports:
-      - 80:80
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
   db:
     image: postgres:17
     environment:
@@ -31,6 +14,9 @@ services:
     image: nginx:1.27-alpine
     ports:
       - 80
+    networks:
+      - infra
+      - default
     volumes:
       - www:/usr/share/nginx/html
 
@@ -58,6 +44,9 @@ services:
       - 8080
     labels:
       - traefik.frontend.auth.basic=admin:$$1$$I5Kt8BwT$$G4y6mBV3xVzyZKUECxqV61
+    networks:
+      - infra
+      - default
 
 volumes:
   vipdb:
@@ -65,3 +54,5 @@ volumes:
 
 networks:
   default:
+  infra:
+    external: true
