@@ -51,6 +51,8 @@ services:
     image: adminer
     ports:
       - 8080
+    labels:
+      - traefik.frontend.auth.basic=admin:$$1$$I5Kt8BwT$$G4y6mBV3xVzyZKUECxqV61
 
 volumes:
   vipdb:
