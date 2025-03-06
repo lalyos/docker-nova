@@ -21,6 +21,8 @@ services:
     image: postgres:17
     environment:
     - POSTGRES_PASSWORD=s3cr3t
+    labels:
+    - traefik.enable=false
     volumes:
     - vipdb:/var/lib/postgresql/data
     - ./sql:/docker-entrypoint-initdb.d
