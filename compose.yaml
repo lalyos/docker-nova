@@ -1,5 +1,22 @@
 name: dev
 services:
+  traefik:
+    image: traefik:1.7-alpine
+    container_name: traefik
+    restart: always
+    command:
+      - --retry
+      - --rest
+      - --docker.domain=lvh.me
+      - --docker.network=default
+      - --api.dashboard
+    labels:
+      - "traefik.frontend.rule=Host:traefik.lvh.me"
+      - "traefik.port=8080"
+    ports:
+      - 80:80
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
   db:
     image: postgres:17
     environment:
@@ -36,3 +53,6 @@ services:
 volumes:
   vipdb:
   www:
+
+networks:
+  default:
